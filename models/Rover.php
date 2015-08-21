@@ -29,19 +29,51 @@ class Rover implements RoverInterface
         $this->heading = $heading;
     }
 
-    public function getCurrentX()
+    /**
+     * @return int
+     */
+    public function getX()
     {
         return $this->x;
     }
 
-    public function getCurrentY()
+    /**
+     * @return int
+     */
+    public function getY()
     {
         return $this->y;
     }
 
-    public function getCurrentHeading()
+    /**
+     * @return string
+     */
+    public function getHeading()
     {
         return $this->heading;
     }
 
+    /**
+     * @param $x
+     */
+    public function setX($x)
+    {
+        $this->x = $x;
+    }
+
+    /**
+     * @param $y
+     */
+    public function setY($y)
+    {
+        $this->y = $y;
+    }
+
+    /**
+     * @param $heading
+     */
+    public function setHeading($heading)
+    {
+        $this->heading = $heading;
+    }
 }
