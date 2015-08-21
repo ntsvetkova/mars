@@ -14,8 +14,8 @@ class Plateau
     private $coordinates = [
         'leftCornerX' => 0,
         'leftCornerY' => 0,
-        'rightCornerX',
-        'rightCornerY'
+        'rightCornerX' => 0,
+        'rightCornerY' => 0
     ];
 
     /**
