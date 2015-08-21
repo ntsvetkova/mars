@@ -7,11 +7,11 @@ namespace Mars;
  */
 interface RoverInterface
 {
-    public function getCurrentX();
-    public function getCurrentY();
-    public function getCurrentHeading();
-//    public function getFinalX();
-//    public function getFinalY();
-//    public function getFinalHeading();
+    public function getX();
+    public function getY();
+    public function getHeading();
+    public function setX($x);
+    public function setY($y);
+    public function setHeading($heading);
 
 }
