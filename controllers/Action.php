@@ -1,12 +1,12 @@
 <?php
 namespace Mars;
 
-require_once __DIR__ . '/ActionsInterface.php';
 require_once __DIR__ . '/../errors.php';
+require_once __DIR__ . '/ActionsInterface.php';
 require_once __DIR__ . '/../models/Plateau.php';
 require_once __DIR__ . '/../models/CoordinatesException.php';
 
-class Actions implements ActionsInterface
+class Action implements ActionsInterface
 {
 
     /**
@@ -34,25 +34,24 @@ class Actions implements ActionsInterface
         $this->actions = str_split($actions);
     }
 
-    public function change($x, $y, $heading)
+    public function change(Rover $rover, Plateau $plateau)
     {
-        $plateau = new Plateau(5,5);
         $plateauCoordinates = $plateau->getCoordinates();
         foreach ($this->actions as $changing) {
-            if ($this->checkRoverCoordinates($x, $y, $plateauCoordinates) == 1) {
+            if ($this->checkRoverCoordinates($rover->getX(), $rover->getY(), $plateauCoordinates) == 1) {
                 break;
             }
             if ($changing == 'L' || $changing == 'R') {
-                $heading = $this->rotate($heading, $changing);
+                $rover->setHeading($this->rotate($rover->getHeading(), $changing));
             } else {
-                if ($heading == 'W' || $heading == 'E') {
-                    $x = $this->move($x, $heading, $plateauCoordinates);
+                if ($rover->getHeading() == 'W' || $rover->getHeading() == 'E') {
+                    $rover->setX($this->move($rover->getX(), $rover->getHeading(), $plateauCoordinates));
                 } else {
-                    $y = $this->move($y, $heading, $plateauCoordinates);
+                    $rover->setY($this->move($rover->getY(), $rover->getHeading(), $plateauCoordinates));
                 }
             }
         }
-        echo nl2br($x . ' ' .$y . ' ' . $heading . "\n");
+        echo nl2br($rover->getX() . ' ' .$rover->getY() . ' ' . $rover->getHeading() . "\n");
     }
 
     /**
