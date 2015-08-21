@@ -11,5 +11,6 @@ interface ActionsInterface
     public function change($x, $y, $heading);
     public function rotate($oldHeading, $rotating);
     public function move($oldCoordinate, $heading, $plateauCoordinates);
+    public function checkRoverCoordinates($x, $y, $plateauCoordinates);
 
 }

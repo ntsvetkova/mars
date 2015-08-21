@@ -36,7 +36,7 @@ class Actions implements ActionsInterface
 
     public function change($x, $y, $heading)
     {
-        $plateau = new Plateau(5,1);
+        $plateau = new Plateau(5,5);
         $plateauCoordinates = $plateau->getCoordinates();
         foreach ($this->actions as $changing) {
             if ($this->checkRoverCoordinates($x, $y, $plateauCoordinates) == 1) {
@@ -80,6 +80,12 @@ class Actions implements ActionsInterface
         return $newCoordinate;
     }
 
+    /**
+     * @param $x
+     * @param $y
+     * @param $plateauCoordinates
+     * @return int
+     */
     public function checkRoverCoordinates($x, $y, $plateauCoordinates) {
         $errorCode = 0;
         try {
@@ -94,5 +100,5 @@ class Actions implements ActionsInterface
         }
         return $errorCode;
     }
-    
+
 }

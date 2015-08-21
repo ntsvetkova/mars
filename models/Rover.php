@@ -44,29 +44,4 @@ class Rover implements RoverInterface
         return $this->heading;
     }
 
-//    /**
-//     * @return int
-//     */
-//    public function getFinalX()
-//    {
-//        return $this->x;
-//    }
-//
-//    /**
-//     * @return int
-//     */
-//    public function getFinalY()
-//    {
-//        return $this->y;
-//    }
-//
-//    /**
-//     * @return string
-//     */
-//    public function getFinalHeading()
-//    {
-//        return $this->heading;
-//    }
-
-
 }
