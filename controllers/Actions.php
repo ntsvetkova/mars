@@ -10,6 +10,9 @@ class Actions implements ActionsInterface
      * @var array
      */
     private $actions = [];
+    /**
+     * @var array
+     */
     private $changeHeadings = [
         'NL' => 'W',
         'NR' => 'E',
@@ -28,23 +31,43 @@ class Actions implements ActionsInterface
         $this->actions = str_split($actions);
     }
 
-    /**
-     * @param $oldHeading string
-     * @param $newHeading string
-     */
-    public function rotate($oldHeading)
+    public function change($x, $y, $heading)
     {
-        $newHeading = '';
-        foreach ($this->actions as $rotating) {
-            if ($rotating == 'L' || $rotating == 'R') {
-                $newHeading = $this->changeHeadings[$oldHeading . $rotating];
+        foreach ($this->actions as $changing) {
+            if ($changing == 'L' || $changing == 'R') {
+                $heading = $this->rotate($heading, $changing);
             }
-            echo $newHeading;
+            else {
+                if ($heading == 'W' || $heading == 'E') {
+                    $x = $this->move($x, $heading);
+                }
+                else {
+                    $y = $this->move($y, $heading);
+                }
+            }
         }
+        echo nl2br($x . ', ' .$y . ', ' . $heading . "\n");
     }
 
-    public function move()
+    /**
+     * @param $oldHeading
+     * @param $rotating
+     */
+    public function rotate($oldHeading, $rotating)
     {
-        // TODO: Implement move() method.
+        return $this->changeHeadings[$oldHeading . $rotating];
     }
+
+    public function move($oldCoordinate, $heading)
+    {
+        if ($heading == 'E' || $heading == 'N') {
+            $newCoordinate = ++$oldCoordinate;
+        }
+        else {
+            $newCoordinate = --$oldCoordinate;
+        }
+        return $newCoordinate;
+    }
+
+
 }
