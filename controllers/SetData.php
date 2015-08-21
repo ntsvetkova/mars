@@ -58,7 +58,9 @@ class SetData
             else {
                 throw new MarsException($errors['PLATEAU_COORDINATES']);
             }
-            $this->plateau = new Plateau($this->plateauRightCornerX, $this->plateauRightCornerY);
+            $this->plateau = Plateau::getInstance();
+            $this->plateau->setCoordinates($this->plateauRightCornerX, $this->plateauRightCornerY);
+//            $this->plateau = new Plateau($this->plateauRightCornerX, $this->plateauRightCornerY);
 
             foreach ($input as $key => $value) {
                 if ($key % 2 == 0) {
@@ -97,3 +99,9 @@ class SetData
     }
 
 }
+
+    /**
+     * @todo get data from form
+     */
+    $data = new SetData(explode("\n",$_POST["input"]));
+    $data->execute();
