@@ -1,9 +1,10 @@
 <?php
 namespace Mars;
 
+require_once __DIR__ . '/../errors.php';
+require_once __DIR__ . '/Action.php';
 require_once __DIR__ . '/../models/Plateau.php';
 require_once __DIR__ . '/../models/Rover.php';
-require_once __DIR__ . '/Action.php';
 
 /**
  * Class SetData
@@ -41,26 +42,45 @@ class SetData
      */
     public function __construct($input)
     {
-        if (preg_match("/\d\s\d$/", trim($input[0]))) {
-            $plateauCoordinates = explode(' ', trim($input[0]));
-            $this->plateauRightCornerX = (int)$plateauCoordinates[0];
-            $this->plateauRightCornerY = (int)$plateauCoordinates[1];
-            unset($input[0]);
-        }
-        $this->plateau = new Plateau($this->plateauRightCornerX, $this->plateauRightCornerY);
-
+        $errors = unserialize(ERROR_MESSAGE);
         foreach ($input as $key => $value) {
-            if ($key % 2 == 0) {
-                if (preg_match("/[LRM]$/", trim($value))) {
-                    array_push($this->arrInstructions, trim($value));
+            if (empty($value)) {
+                unset($input[$key]);
+            }
+        }
+        try {
+            if (preg_match("/\d\s\d$/", trim($input[0]))) {
+                $plateauCoordinates = explode(' ', trim($input[0]));
+                $this->plateauRightCornerX = (int)$plateauCoordinates[0];
+                $this->plateauRightCornerY = (int)$plateauCoordinates[1];
+                unset($input[0]);
+            }
+            else {
+                throw new MarsException($errors['PLATEAU_COORDINATES']);
+            }
+            $this->plateau = new Plateau($this->plateauRightCornerX, $this->plateauRightCornerY);
+
+            foreach ($input as $key => $value) {
+                if ($key % 2 == 0) {
+                    if (preg_match("/[LRM]$/", trim($value))) {
+                        array_push($this->arrInstructions, trim($value));
+                    }
+                    else {
+                        throw new MarsException($errors['ROVER_INSTRUCTIONS']);
+                    }
+                } else if (preg_match("/(\d\s){2}[NSWE]{1}$/", trim($value))) {
+                    array_push($this->arrPositions, trim($value));
+                }
+                else {
+                    throw new MarsException($errors['ROVER_POSITION']);
                 }
             }
-            else if (preg_match("/(\d\s){2}[NSWE]{1}?$/", trim($value))) {
-                    array_push($this->arrPositions, trim($value));
+            for ($i = 0; $i < count($this->arrInstructions); $i++) {
+                $this->arrRover[$this->arrPositions[$i]] = $this->arrInstructions[$i];
             }
         }
-        for ($i = 0; $i < count($this->arrInstructions); $i++) {
-            $this->arrRover[$this->arrPositions[$i]] = $this->arrInstructions[$i];
+        catch (MarsException $e) {
+            echo $e;
         }
     }
 

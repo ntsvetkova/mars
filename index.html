@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Exploring Mars</title>
+    <link rel='stylesheet' href='./css/main.css'>
 </head>
 <body>
-
-    <form action="index.php" method="post">
-        <textarea rows="5" name="input"></textarea><br/>
-        <!--<label>Plateau Right Corner: </label>-->
-        <!--<input type="text" name="PlateauRightCorner"><br/>-->
-        <!--<label>Rover's position: </label>-->
-        <!--<input type="text" name="Position"><br/>-->
-        <!--<label>Instructions: </label>-->
-        <!--<input type="text" name="Instructions"><br/>-->
-        <button type="submit">Show final position</button>
-    </form>
-
+    <div class="wrapper">
+        <form action="input.php" method="post" target="output">
+            <textarea rows="10" name="input" placeholder="Enter data"></textarea><br/>
+            <button type="submit">Show final position</button>
+        </form>
+        <br/>
+        <iframe name="output"></iframe>
+    </div>
 </body>
 </html>

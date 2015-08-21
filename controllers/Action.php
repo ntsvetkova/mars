@@ -4,7 +4,7 @@ namespace Mars;
 require_once __DIR__ . '/../errors.php';
 require_once __DIR__ . '/ActionsInterface.php';
 require_once __DIR__ . '/../models/Plateau.php';
-require_once __DIR__ . '/../models/CoordinatesException.php';
+require_once __DIR__ . '/../models/MarsException.php';
 
 class Action implements ActionsInterface
 {
@@ -37,8 +37,10 @@ class Action implements ActionsInterface
     public function change(Rover $rover, Plateau $plateau)
     {
         $plateauCoordinates = $plateau->getCoordinates();
+        $errorCode = 0;
         foreach ($this->actions as $changing) {
-            if ($this->checkRoverCoordinates($rover->getX(), $rover->getY(), $plateauCoordinates) == 1) {
+            $errorCode = $this->checkRoverCoordinates($rover->getX(), $rover->getY(), $plateauCoordinates);
+            if ($errorCode == 1) {
                 break;
             }
             if ($changing == 'L' || $changing == 'R') {
@@ -51,7 +53,9 @@ class Action implements ActionsInterface
                 }
             }
         }
-        echo nl2br($rover->getX() . ' ' .$rover->getY() . ' ' . $rover->getHeading() . "\n");
+        if ($errorCode == 0) {
+            echo nl2br($rover->getX() . ' ' . $rover->getY() . ' ' . $rover->getHeading() . "\n");
+        }
     }
 
     /**
@@ -87,13 +91,14 @@ class Action implements ActionsInterface
      */
     public function checkRoverCoordinates($x, $y, $plateauCoordinates) {
         $errorCode = 0;
+        $errors = unserialize(ERROR_MESSAGE);
         try {
             if ($x < $plateauCoordinates['leftCornerX'] || $x > $plateauCoordinates['rightCornerX']
                 || $y < $plateauCoordinates['leftCornerY'] || $y > $plateauCoordinates['rightCornerY']) {
-                throw new CoordinatesException(ERROR_MESSAGE);
+                throw new MarsException($errors['ROVER_COORDINATES']);
             }
         }
-        catch (CoordinatesException $e) {
+        catch (MarsException $e) {
             echo nl2br($e . "\n");
             $errorCode = 1;
         }
