@@ -8,7 +8,7 @@ namespace Mars;
 interface ActionsInterface
 {
 
-    public function change($x, $y, $heading);
+    public function change(Rover $rover, Plateau $plateau);
     public function rotate($oldHeading, $rotating);
     public function move($oldCoordinate, $heading, $plateauCoordinates);
     public function checkRoverCoordinates($x, $y, $plateauCoordinates);
