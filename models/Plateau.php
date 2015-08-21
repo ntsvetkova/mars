@@ -21,38 +21,43 @@ class Plateau
     /**
      * @var
      */
-//    private static $instance;
+    private static $instance;
 
     /**
-     * @param $x int
-     * @param $y int
+     * Constructor
      */
-    public function __construct($x, $y) {
-        $this->coordinates['rightCornerX'] = $x;
-        $this->coordinates['rightCornerY'] = $y;
+    public function __construct() {}
+
+    /**
+     * @return mixed
+     */
+    public static function getInstance() {
+        if (empty(self::$instance)) {
+            $classname = __CLASS__;
+            self::$instance = new $classname;
+        }
+        return self::$instance;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public static function getInstance() {
-//        if (empty(self::$instance)) {
-//            $classname = __CLASS__;
-//            self::$instance = new $classname;
-//        }
-//        return self::$instance;
-//    }
-//
-//    /**
-//     * Clone restriction
-//     */
-//    private function __clone() {}
+    /**
+     * Clone restriction
+     */
+    private function __clone() {}
 
     /**
      * @return array
      */
     public function getCoordinates() {
         return $this->coordinates;
+    }
+
+    /**
+     * @param $x
+     * @param $y
+     */
+    public function setCoordinates($x, $y) {
+        $this->coordinates['rightCornerX'] = $x;
+        $this->coordinates['rightCornerY'] = $y;
     }
 
 }
