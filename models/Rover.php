@@ -20,50 +20,53 @@ class Rover implements RoverInterface
 
     /**
      * @param $x
-     */
-    public function setStartX($x)
-    {
-        // TODO: Implement setStartX() method.
-    }
-
-    /**
      * @param $y
-     */
-    public function setStart($y)
-    {
-        // TODO: Implement setStart() method.
-    }
-
-    /**
      * @param $heading
      */
-    public function setStartHeading($heading)
-    {
-        // TODO: Implement setStartHeading() method.
+    public function __construct($x, $y, $heading) {
+        $this->x = $x;
+        $this->y = $y;
+        $this->heading = $heading;
     }
 
-    /**
-     * @return int
-     */
-    public function getFinalX()
+    public function getCurrentX()
     {
         return $this->x;
     }
 
-    /**
-     * @return int
-     */
-    public function getFinalY()
+    public function getCurrentY()
     {
         return $this->y;
     }
 
-    /**
-     * @return string
-     */
-    public function getFinalHeading()
+    public function getCurrentHeading()
     {
         return $this->heading;
     }
+
+//    /**
+//     * @return int
+//     */
+//    public function getFinalX()
+//    {
+//        return $this->x;
+//    }
+//
+//    /**
+//     * @return int
+//     */
+//    public function getFinalY()
+//    {
+//        return $this->y;
+//    }
+//
+//    /**
+//     * @return string
+//     */
+//    public function getFinalHeading()
+//    {
+//        return $this->heading;
+//    }
+
 
 }

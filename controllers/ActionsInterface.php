@@ -8,7 +8,7 @@ namespace Mars;
 interface ActionsInterface
 {
 
-    public function changeHeading();
+    public function rotate($oldHeading);
     public function move();
 
 }
