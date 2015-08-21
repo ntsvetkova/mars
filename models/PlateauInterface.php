@@ -8,6 +8,6 @@ namespace Mars;
 interface PlateauInterface
 {
 
-    public function setRightCornerCoordinates($x, $y);
+
 
 }

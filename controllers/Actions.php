@@ -2,6 +2,9 @@
 namespace Mars;
 
 require_once __DIR__ . '/ActionsInterface.php';
+require_once __DIR__ . '/../errors.php';
+require_once __DIR__ . '/../models/Plateau.php';
+require_once __DIR__ . '/../models/CoordinatesException.php';
 
 class Actions implements ActionsInterface
 {
@@ -33,20 +36,23 @@ class Actions implements ActionsInterface
 
     public function change($x, $y, $heading)
     {
+        $plateau = new Plateau(5,1);
+        $plateauCoordinates = $plateau->getCoordinates();
         foreach ($this->actions as $changing) {
+            if ($this->checkRoverCoordinates($x, $y, $plateauCoordinates) == 1) {
+                break;
+            }
             if ($changing == 'L' || $changing == 'R') {
                 $heading = $this->rotate($heading, $changing);
-            }
-            else {
+            } else {
                 if ($heading == 'W' || $heading == 'E') {
-                    $x = $this->move($x, $heading);
-                }
-                else {
-                    $y = $this->move($y, $heading);
+                    $x = $this->move($x, $heading, $plateauCoordinates);
+                } else {
+                    $y = $this->move($y, $heading, $plateauCoordinates);
                 }
             }
         }
-        echo nl2br($x . ', ' .$y . ', ' . $heading . "\n");
+        echo nl2br($x . ' ' .$y . ' ' . $heading . "\n");
     }
 
     /**
@@ -58,16 +64,35 @@ class Actions implements ActionsInterface
         return $this->changeHeadings[$oldHeading . $rotating];
     }
 
-    public function move($oldCoordinate, $heading)
+    /**
+     * @param $oldCoordinate
+     * @param $heading
+     * @param $plateauCoordinates
+     * @return mixed
+     */
+    public function move($oldCoordinate, $heading, $plateauCoordinates)
     {
         if ($heading == 'E' || $heading == 'N') {
             $newCoordinate = ++$oldCoordinate;
-        }
-        else {
+        } else {
             $newCoordinate = --$oldCoordinate;
         }
         return $newCoordinate;
     }
 
-
+    public function checkRoverCoordinates($x, $y, $plateauCoordinates) {
+        $errorCode = 0;
+        try {
+            if ($x < $plateauCoordinates['leftCornerX'] || $x > $plateauCoordinates['rightCornerX']
+                || $y < $plateauCoordinates['leftCornerY'] || $y > $plateauCoordinates['rightCornerY']) {
+                throw new CoordinatesException(ERROR_MESSAGE);
+            }
+        }
+        catch (CoordinatesException $e) {
+            echo nl2br($e . "\n");
+            $errorCode = 1;
+        }
+        return $errorCode;
+    }
+    
 }

@@ -7,45 +7,52 @@ namespace Mars;
  */
 class Plateau
 {
+
     /**
-     * @var int
+     * @var array
      */
-    private $leftCornerX = 0;
-    /**
-     * @var int
-     */
-    private $leftCornerY = 0;
-    /**
-     * @var int
-     */
-    private $rightCornerX;
-    /**
-     * @var int
-     */
-    private $rightCornerY;
+    private $coordinates = [
+        'leftCornerX' => 0,
+        'leftCornerY' => 0,
+        'rightCornerX',
+        'rightCornerY'
+    ];
+
     /**
      * @var
      */
-    private static $instance;
+//    private static $instance;
 
     /**
      * @param $x int
      * @param $y int
      */
-    private function __construct($x, $y) {
-        $this->rightCornerX = $x;
-        $this->rightCornerY = $y;
+    public function __construct($x, $y) {
+        $this->coordinates['rightCornerX'] = $x;
+        $this->coordinates['rightCornerY'] = $y;
     }
 
+//    /**
+//     * @return mixed
+//     */
+//    public static function getInstance() {
+//        if (empty(self::$instance)) {
+//            $classname = __CLASS__;
+//            self::$instance = new $classname;
+//        }
+//        return self::$instance;
+//    }
+//
+//    /**
+//     * Clone restriction
+//     */
+//    private function __clone() {}
+
     /**
-     * @return mixed
+     * @return array
      */
-    public static function getInstance() {
-        if (empty(self::$instance)) {
-            $classname = __CLASS__;
-            self::$instance = new $classname;
-        }
-        return self::$instance;
+    public function getCoordinates() {
+        return $this->coordinates;
     }
 
 }
