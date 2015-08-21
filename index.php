@@ -1,7 +1,8 @@
 <?php
 namespace Mars;
 
-echo '!';
 require_once __DIR__ . '/controllers/Actions.php';
-$a = new Actions('LRLRL');
-$a->rotate('N');
+$a = new Actions('LMLMLMLMM');
+$a->change(1,2,'N');
+$b = new Actions('MMRMMRMRRM');
+$b->change(3,3,E);
