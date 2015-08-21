@@ -1,0 +1,26 @@
+body {
+    margin: 0 auto;
+    width: 60%;
+    background-color: white;
+    font-family: Arial;
+    color: #1f1f21;
+}
+
+.wrapper {
+    width: 100%;
+}
+
+.wrapper form textarea {
+    width: 100%;
+}
+
+.wrapper form button {
+    width: 200px;
+    height: 30px;
+    margin: 20px auto;
+}
+
+.wrapper iframe {
+    width: 100%;
+    margin: 0;
+}

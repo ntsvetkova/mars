@@ -1,19 +1,17 @@
 <?php
 namespace Mars;
 
-require_once __DIR__ . '/../errors.php';
-
 /**
  * Class CoordinatesException
  * @package Mars
  */
-class CoordinatesException extends \Exception
+class MarsException extends \Exception
 {
     public function __construct($message, $code = 0, \Exception $previous = null) {
         parent::__construct($message, $code, $previous);
     }
 
     public function __toString() {
-        return ERROR_DESCRIPTION . ": {$this->message}";
+        return $this->message;
     }
 }
